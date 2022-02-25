@@ -1,12 +1,7 @@
-import { Button } from "@mantine/core";
+import MainRouter from "./router/MainRouter";
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Hello</h1>
-      <Button>Hello</Button>
-    </div>
-  );
+  return <MainRouter />;
 }
 
 export default App;
