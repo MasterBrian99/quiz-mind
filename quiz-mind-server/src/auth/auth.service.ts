@@ -1,3 +1,4 @@
+import { AuthResponseDto } from './dto/auth-response.dto';
 import { AuthLoginDto } from './dto/login-auth.dto';
 import { PasswordService } from './password.service';
 import { PrismaService } from './../prisma/prisma.service';
@@ -18,7 +19,8 @@ export class AuthService {
     private readonly passwordService: PasswordService,
     private jwtService: JwtService,
   ) {}
-  async signUp(createAuthDto: CreateAuthDto): Promise<CreateAuthDto> {
+  async signUp(createAuthDto: CreateAuthDto): Promise<AuthResponseDto> {
+    const auth = new AuthResponseDto();
     const alreadyExists = await this.prisma.user.findUnique({
       where: {
         username: createAuthDto.username,
@@ -27,12 +29,11 @@ export class AuthService {
     if (alreadyExists) {
       throw new ConflictException('User Already Exists!');
     }
-    let saveUser = null;
     try {
       const hashPassword = await this.passwordService.hashPassword(
         createAuthDto.password,
       );
-      saveUser = await this.prisma.user.create({
+      await this.prisma.user.create({
         data: {
           email: createAuthDto.email,
           username: createAuthDto.username,
@@ -43,7 +44,9 @@ export class AuthService {
     } catch (error) {
       throw new InternalServerErrorException();
     }
-    return saveUser;
+    auth.code = 201;
+    auth.message = 'succesful !';
+    return auth;
   }
 
   async signin(authLoginDto: AuthLoginDto): Promise<{ accessToken: string }> {

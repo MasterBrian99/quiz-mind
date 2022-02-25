@@ -1,1 +1,4 @@
-export class AuthResponseDto {}
+export class AuthResponseDto {
+  message: string;
+  code: number;
+}

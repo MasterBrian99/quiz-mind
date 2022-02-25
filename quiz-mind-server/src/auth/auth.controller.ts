@@ -1,3 +1,4 @@
+import { AuthResponseDto } from './dto/auth-response.dto';
 import { AuthLoginDto } from './dto/login-auth.dto';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import {
@@ -18,7 +19,7 @@ export class AuthController {
   @Post('/signup')
   signUp(
     @Body(ValidationPipe) createAuthDto: CreateAuthDto,
-  ): Promise<CreateAuthDto> {
+  ): Promise<AuthResponseDto> {
     return this.authService.signUp(createAuthDto);
   }
 
