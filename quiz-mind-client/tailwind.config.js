@@ -26,6 +26,12 @@ module.exports = {
           800: "#333333",
         },
       },
+      maxWidth: {
+        4: "60rem",
+      },
+      width: {
+        190: "",
+      },
     },
   },
   plugins: [],
