@@ -8,6 +8,7 @@ import {
   ValidationPipe,
   Get,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -32,7 +33,9 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  test() {
+  test(@Req() request): string {
+    // console.log(request.user.username);
+
     return 'Hello';
   }
 }

@@ -11,9 +11,27 @@ datasource db {
 }
 
 model User {
-  id   Int     @id @default(autoincrement())
-  name String @db.VarChar(100)
-  username String  @unique @db.VarChar(30)
-  email String  @db.VarChar(100)
-  password String 
+  id          Int          @id @default(autoincrement())
+  username    String       @unique @db.VarChar(30)
+  password    String
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  UserProfile UserProfile?
+
+  @@map("user_login")
+}
+
+model UserProfile {
+  id          Int      @id @default(autoincrement())
+  first_name  String   @db.VarChar(100)
+  last_name   String   @db.VarChar(100)
+  email       String   @db.VarChar(100)
+  profile_url String   @db.LongText
+  birthday    DateTime
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     Int      @unique
+
+  @@map("user_profile")
 }

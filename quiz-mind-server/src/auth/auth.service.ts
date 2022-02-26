@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -35,9 +36,7 @@ export class AuthService {
       );
       await this.prisma.user.create({
         data: {
-          email: createAuthDto.email,
           username: createAuthDto.username,
-          name: createAuthDto.name,
           password: hashPassword,
         },
       });
@@ -69,8 +68,8 @@ export class AuthService {
       throw new ForbiddenException('Wrong Password!');
     }
 
-    const payload = {
-      userId: user.username,
+    const payload: JwtPayload = {
+      username: user.username,
     };
 
     const accessToken = this.jwtService.sign(payload);
