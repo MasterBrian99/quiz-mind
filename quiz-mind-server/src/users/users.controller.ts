@@ -1,3 +1,4 @@
+import { UpdateUserProfileDto } from './dto/update-userprofile.dto';
 import { CreateUserProfileDto } from './dto/create-userprofile.dto';
 import { JwtAuthGuard } from './../auth/jwt-auth.guard';
 import {
@@ -30,7 +31,14 @@ export class UsersController {
     const username = request.user.username;
     return this.usersService.createProfile(username, createUserProfileDto);
   }
-  async updateUserProfile() {
-    return null;
+
+  @Post('update')
+  async updateUserProfile(
+    @Req() request: any,
+    @Body()
+    updateUserProfileDto: UpdateUserProfileDto,
+  ): Promise<GetUserProfileDto> {
+    const username = request.user.username;
+    return this.usersService.updateUserProfile(username, updateUserProfileDto);
   }
 }

@@ -35,3 +35,11 @@ model UserProfile {
 
   @@map("user_profile")
 }
+
+model Category {
+  id            Int    @id @default(autoincrement())
+  category_name String @db.VarChar(100)
+  category_id   Int
+
+  @@map("category")
+}
