@@ -57,3 +57,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Keep environment variables out of version control
+*/.env
+
+*/prisma/migrations
